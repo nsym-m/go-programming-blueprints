@@ -55,7 +55,7 @@ var upgrader = &websocket.Upgrader{
 }
 
 // websocketでHttp Serverをラップする
-func (r *room) ServeHTTP(w httpResponseWriter, req *http.Request) {
+func (r *room) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	socket, err := upgrader.Upgrade(w, req, nil)
 	if err != nil {
 		log.Fatal("ServeHTTP:", err)
