@@ -1,4 +1,4 @@
-module github.com/nsym-m/go-programming-blueprints
+module go-programming-blueprints
 
 go 1.17
 
