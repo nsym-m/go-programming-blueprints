@@ -54,6 +54,7 @@ var upgrader = &websocket.Upgrader{
 	WriteBufferSize: socketBufferSize,
 }
 
+// websocketでHttp Serverをラップする
 func (r *room) ServeHTTP(w httpResponseWriter, req *http.Request) {
 	socket, err := upgrader.Upgrade(w, req, nil)
 	if err != nil {
@@ -69,4 +70,14 @@ func (r *room) ServeHTTP(w httpResponseWriter, req *http.Request) {
 	defer func() { r.leave <- client }()
 	go client.write()
 	client.read()
+}
+
+// すぐに利用できるチャットルームを生成して返す
+func newRoom() *room {
+	return &room{
+		forward: make(chan []byte),
+		join: make(chan *client),
+		leave: make(chan *client),
+		clients: make(map[*client]bool),
+	}
 }
