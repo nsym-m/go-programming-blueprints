@@ -30,7 +30,7 @@ func main() {
 	// r.tracer = trace.New(os.Stdout)
 	http.Handle("/", &templateHandler{filename: "chat.html"})
 	http.Handle("/room", r)
-7
+
 	// チャットルームの開始
 	go r.run()
 
