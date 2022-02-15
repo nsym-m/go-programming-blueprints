@@ -37,6 +37,7 @@
                         alert("接続が終了しました")
                     }
                     socket.onmessage = function(e) {
+                        console.log(e.data);
                         messages.append($("<li>").text(e.data));
                     }
                 }
