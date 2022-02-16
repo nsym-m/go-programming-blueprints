@@ -10,7 +10,8 @@ import (
 func main() {
 	// practiceLoop()
 	// roulette()
-	castToFloat()
+	// castToFloat()
+	sliceTest()
 }
 
 // for文の練習
@@ -62,4 +63,16 @@ func castToFloat() {
 		fmt.Printf("%v", flo)
 		println("bad")
 	}
+}
+
+func sliceTest() {
+	arr := [...]int{1, 2, 3, 4, 5}
+	sli := arr[1:5]
+	sli2 := sli[2:3]
+	fmt.Printf("%v", sli)
+	fmt.Printf("%v", cap(sli))
+	fmt.Printf("%v", sli2)
+	fmt.Printf("%v", cap(sli2))
+	// [2 3 4 5]4[4]2
+	// スライスから複数回要素を取得するとcap()では前回のスライス（配列）の要素数まで見れる
 }
