@@ -2,11 +2,18 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"strconv"
+	"time"
 )
 
 func main() {
-	// for
+	// practiceLoop()
+	roulette()
+}
+
+// for文の練習
+func practiceLoop() {
 	for i := 1; i <= 100; i++ {
 		// if
 		if i%2 == 0 {
@@ -21,6 +28,23 @@ func main() {
 			fmt.Printf("%s-偶数\n", strconv.Itoa(i))
 		default:
 			fmt.Printf("%s-奇数\n", strconv.Itoa(i))
+		}
+	}
+}
+
+// おみくじ
+func roulette() {
+	for i := 0; i < 100; i++ {
+		rand.Seed(time.Now().UnixNano())
+		rand := rand.Intn(6) + 1
+		if rand == 1 {
+			fmt.Println("凶")
+		} else if rand == 2 || rand == 3 {
+			fmt.Println("吉")
+		} else if rand == 4 || rand == 5 {
+			fmt.Println("中吉")
+		} else if rand == 6 {
+			fmt.Println("大吉")
 		}
 	}
 }
