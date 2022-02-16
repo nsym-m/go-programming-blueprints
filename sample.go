@@ -9,7 +9,8 @@ import (
 
 func main() {
 	// practiceLoop()
-	roulette()
+	// roulette()
+	castToFloat()
 }
 
 // for文の練習
@@ -46,5 +47,19 @@ func roulette() {
 		} else if rand == 6 {
 			fmt.Println("大吉")
 		}
+	}
+}
+
+func castToFloat() {
+	var sum int
+	sum = 5 + 6 + 3
+	avg := sum / 3
+	flo := float64(avg)
+	if flo > 4.5 {
+		fmt.Printf("%v", flo)
+		println("good")
+	} else {
+		fmt.Printf("%v", flo)
+		println("bad")
 	}
 }
