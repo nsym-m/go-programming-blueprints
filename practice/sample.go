@@ -11,7 +11,8 @@ func main() {
 	// practiceLoop()
 	// roulette()
 	// castToFloat()
-	sliceTest()
+	// sliceTest()
+	myInt()
 }
 
 // for文の練習
@@ -75,4 +76,15 @@ func sliceTest() {
 	fmt.Printf("%v", cap(sli2))
 	// [2 3 4 5]4[4]2
 	// スライスから複数回要素を取得するとcap()では前回のスライス（配列）の要素数まで見れる
+}
+
+type MyInt int
+// レシーバ（ここではMyInt型のn）に直接変更を加える場合には*でポインタ型にする
+func (n *MyInt) Inc() { *n++ }
+
+func myInt() {
+	var n MyInt
+	println(n)
+	n.Inc()
+	println(n)
 }
