@@ -79,6 +79,7 @@ func sliceTest() {
 }
 
 type MyInt int
+
 // レシーバ（ここではMyInt型のn）に直接変更を加える場合には*でポインタ型にする
 func (n *MyInt) Inc() { *n++ }
 

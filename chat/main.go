@@ -7,6 +7,10 @@ import (
 	"net/http"
 	"path/filepath"
 	"sync"
+
+	"github.com/stretchr/gomniauth"
+	"github.com/stretchr/gomniauth/providers/google"
+	"github.com/stretchr/signature"
 )
 
 type templateHandler struct {
@@ -26,8 +30,19 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func main() {
 	var addr = flag.String("addr", ":8080", "アプリケーションのアドレス")
 	flag.Parse()
+
+	// Gomniauthのセットアップ
+	const googleSecretKey = ""
+	const googleClientId = ""
+	gomniauth.SetSecurityKey(signature.RandomKey(64))
+	gomniauth.WithProviders(
+		google.New(googleClientId, googleSecretKey, "http://localhost:8888/auth/callback/google"),
+	)
+
 	r := newRoom()
-	http.Handle("/", &templateHandler{filename: "chat.html"})
+	http.Handle("/chat", MustAuth(&templateHandler{filename: "chat.html"}))
+	http.Handle("/login", &templateHandler{filename: "login.html"})
+	http.HandleFunc("/auth/", loginHandler)
 	http.Handle("/room", r)
 
 	// チャットルームの開始
@@ -39,3 +54,9 @@ func main() {
 		log.Fatal("ListenAndServe:", err)
 	}
 }
+
+// client id
+// 549548098364-g088imo1p4gjk64faquabn7tnuu69r4b.apps.googleusercontent.com
+
+// client secret
+// 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
