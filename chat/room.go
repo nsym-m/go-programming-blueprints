@@ -5,10 +5,11 @@ import (
 	"net/http"
 
 	"github.com/gorilla/websocket"
+	"github.com/stretchr/objx"
 )
 
 type room struct {
-	forward chan []byte
+	forward chan *message
 	join    chan *client
 	leave   chan *client
 	clients map[*client]bool
@@ -57,11 +58,19 @@ func (r *room) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		log.Fatal("ServeHTTP:", err)
 		return
 	}
-	client := &client{
-		socket: socket,
-		send:   make(chan []byte, messageBufferSize),
-		room:   r,
+
+	authCookie, err := req.Cookie("auth")
+	if err != nil {
+		log.Fatal("クッキーの取得に失敗しました:", err)
+		return
 	}
+	client := &client{
+		socket:   socket,
+		send:     make(chan *message, messageBufferSize),
+		room:     r,
+		userData: objx.MustFromBase64(authCookie.Value),
+	}
+
 	r.join <- client
 	defer func() { r.leave <- client }()
 	go client.write()
@@ -71,7 +80,7 @@ func (r *room) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 // すぐに利用できるチャットルームを生成して返す
 func newRoom() *room {
 	return &room{
-		forward: make(chan []byte),
+		forward: make(chan *message),
 		join:    make(chan *client),
 		leave:   make(chan *client),
 		clients: make(map[*client]bool),
