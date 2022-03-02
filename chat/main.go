@@ -54,9 +54,3 @@ func main() {
 		log.Fatal("ListenAndServe:", err)
 	}
 }
-
-// client id
-// 549548098364-g088imo1p4gjk64faquabn7tnuu69r4b.apps.googleusercontent.com
-
-// client secret
-// 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
