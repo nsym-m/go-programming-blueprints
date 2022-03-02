@@ -74,6 +74,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 			Path:  "/",
 		})
 		w.Header()["Location"] = []string{"/chat"}
+		w.WriteHeader(http.StatusTemporaryRedirect)
 	default:
 		w.WriteHeader(http.StatusNotFound)
 		fmt.Fprintf(w, "アクション%sには非対応です", action)
