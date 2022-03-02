@@ -10,6 +10,7 @@ import (
 
 	"github.com/stretchr/gomniauth"
 	"github.com/stretchr/gomniauth/providers/google"
+	"github.com/stretchr/objx"
 	"github.com/stretchr/signature"
 )
 
@@ -31,7 +32,7 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		data["UserData"] = objx.MustFromBase64(authCookie.Value)
 	}
 
-	t.templ.Execute(w, r)
+	t.templ.Execute(w, data)
 }
 
 func main() {
